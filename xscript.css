@@ -1,0 +1,80 @@
+/*
+The MIT License (MIT)
+
+Copyright (c) 2015 Phanta
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
+#xscript-chatSettingsDiv {
+    overflow: hidden;
+    width: 100%;
+    padding-top: 4px;
+    position: absolute;
+    top: 46px;
+    left: 0;
+    z-index: 420;
+    height: 100%;
+    background: #1C1F25;
+}
+
+#xscript-chatSettingsDiv .item {
+    position: relative;
+    margin-top: 6px;
+    margin-left: 12px;
+    height: 25px;
+    cursor: pointer;
+}
+
+#xscript-chatSettingsDiv span {
+    position: absolute;
+    left: 17px;
+    margin-left: 10px;
+    color: #808691;
+}
+
+#xscript-chatSettingsDiv .item i {
+    display: none;
+    top: 2px;
+    left: 0;
+}
+
+#playback-container {
+    background: url(http://24.media.tumblr.com/tumblr_luxorfV3gA1qztmnoo1_500.gif);;
+}
+
+#footer, .app-header {
+    background: linear-gradient(#282C35, #090A0C);
+}
+
+#app-menu, #history-button {
+    background: linear-gradient(#282C35, #090A0C);
+}
+
+#history-button.selected {
+    background: linear-gradient(#090A0C, #282C35);
+}
+
+#playlist-button {
+    background: linear-gradient(#AC76FF,#22153B);
+}
+
+#chat .is-you {
+    background: linear-gradient(90deg, #00ACC1 0, #0A0A0A 31.4%, #0A0A0A 100%) !important;
+}
