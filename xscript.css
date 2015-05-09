@@ -56,7 +56,7 @@ SOFTWARE.
 }
 
 #playback-container {
-    background: url(http://24.media.tumblr.com/tumblr_luxorfV3gA1qztmnoo1_500.gif);;
+    background: url(https://24.media.tumblr.com/tumblr_luxorfV3gA1qztmnoo1_500.gif);;
 }
 
 #footer, .app-header {
@@ -77,4 +77,8 @@ SOFTWARE.
 
 #chat .is-you {
     background: linear-gradient(90deg, #00ACC1 0, #0A0A0A 31.4%, #0A0A0A 100%) !important;
+}
+
+.xscript-twitch-emote {
+    display: inline-block;
 }

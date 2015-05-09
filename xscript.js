@@ -76,6 +76,7 @@ else {
         STYLESHEET: 1,
         BADGE: 2
     };
+    var TwitchEmotes = {};
     
     // Data
     
@@ -134,6 +135,9 @@ else {
             else
                 plainMsg('Ponymotes already loaded.');
         }
+        $.get('https://twitchemotes.com/api_cache/v2/global.json', function(response) {
+            TwitchEmotes = response;
+        });
     };
     
     /*
@@ -305,7 +309,8 @@ else {
     
     var onChat = function(event) {
         var msg = event.message;
-        var msgDiv = $(document.getElementsByClassName('cid-' + event.cid)[1]);
+        var msgClassObjs = document.getElementsByClassName('cid-' + event.cid);
+        var msgDiv = $(msgClassObjs[msgClassObjs.length - 1]);
         if (containsString(msg, userTag)) {
             NOTIFICATION_SND.play();
             if (API.getUser(event.uid).role >= PlugRole.BOUNCER) {
@@ -323,8 +328,8 @@ else {
             NOTIFICATION_SND.play();
             reloadScript();
         }
-        msgDiv.html(processTwitchEmotes(msgDiv.html()));
-        //msgDiv.html(msgDiv.html().replace(URL_REGEX, '<a target="_blank" href="$1">$1</a>'));
+        if (settings.twitchEmotes.enabled)
+            msgDiv.html(processTwitchEmotes(msgDiv.html()));
         if (settings.chatImg.enabled && API.getUser(event.uid).sub !== 1) {
             if (!containsString(msg.toLowerCase(), 'nsfw') || settings.chatImg.nsfw)
                 msgDiv.html(msgDiv.html().replace(INLINE_IMG_REGEX, '><img style="max-width: 100%;" src="$1"/><'));
@@ -516,7 +521,7 @@ else {
         }
         else if (args === 'default') {
             settings.customBg.enabled = true;
-            setBg('http://i.imgur.com/tOEACrk.png');
+            setBg('https://i.imgur.com/tOEACrk.png');
         }
         else
             plainMsg('Not a real URL to an image!');
@@ -615,7 +620,31 @@ else {
     * Replace twitch emotes with inline images
     */
     var processTwitchEmotes = function(str) {
-        return str;
+        var ret = '';
+        var split = str.split('<br>');
+        $.each(split, function(i, obj) {
+            $.each(obj.split(/(\s)/), function(j, obj2) {
+                var isEmote = false;
+                $.each(TwitchEmotes.emotes, function(k, obj3) {
+                    if (k == obj2) {
+                        ret += getTwitchEmote(obj3, k);
+                        isEmote = true;
+                    }
+                });
+                if (!isEmote)
+                    ret += obj2;
+            });
+            if (i !== split.length - 1)
+                ret += '<br>';
+        });
+        return ret;
+    };
+    
+    /*
+    * Get a inline twitch emote object from a json object
+    */
+    var getTwitchEmote = function(emote, emoteName) {
+        return '<img title="' + emoteName + '" id="twitch-' + emoteName + '" class="xscript-twitch-emote" src="' + TwitchEmotes.template.small.replace('{image_id}', emote.image_id) + '"></img>';
     };
     
     /*
