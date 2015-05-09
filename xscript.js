@@ -29,13 +29,21 @@ if (initialized) {
 }
 else {
     // Constants
-    var SCRIPT_URL = 'https://cdn.rawgit.com/phantamanta44/xScript/master/xscript.js';
-    var STYLESHEET_URL = 'https://cdn.rawgit.com/phantamanta44/xScript/master/xscript.css';
-    var BADGE_URL = 'https://dl.dropboxusercontent.com/u/75796840/xScript/bdg_large.png';
+    var IS_BETA = true;
+    var ScriptUrls = {
+        SCRIPT_URL: 'https://cdn.rawgit.com/phantamanta44/xScript/master/xscript.js',
+        STYLESHEET_URL: 'https://cdn.rawgit.com/phantamanta44/xScript/master/xscript.css',
+        BADGE_URL: 'https://cdn.rawgit.com/phantamanta44/xScript/master/bdg_large.png'
+    };
+    var BetaUrls = {
+        SCRIPT_URL: 'https://dl.dropboxusercontent.com/u/75796840/xScript/xscript.js',
+        STYLESHEET_URL: 'https://dl.dropboxusercontent.com/u/75796840/xScript/xscript.css',
+        BADGE_URL: 'https://dl.dropboxusercontent.com/u/75796840/xScript/bdg_large.png'
+    };
     var URL_REGEX = new RegExp('(https?://\\S*\\.\\S{2,4}(/\\S{0,})?)');
     var IMG_REGEX = new RegExp('https?://\\S*/\\S*\\.(png|jpeg|jpg|gif|tiff|tif|svg|bmp)');
     var INLINE_IMG_REGEX = new RegExp('>(https?://\\S*/\\S*\\.(png|jpeg|jpg|gif|tiff|tif|svg|bmp))<');
-    var NOTIFICATION_SND = new Audio('https://cdn.rawgit.com/phantamanta44/xScript/master/notify.wav');
+    var NOTIFICATION_SND = new Audio('https://dl.dropboxusercontent.com/u/75796840/xScript/notify.wav');
     var MSG_COLOR = '#2196F3';
     
     // Enums
@@ -62,6 +70,11 @@ else {
     var ItemDisplay = {
         TRUE: 'block',
         FALSE: 'none'
+    };
+    var UrlType = {
+        SCRIPT: 0,
+        STYLESHEET: 1,
+        BADGE: 2
     };
     
     // Data
@@ -149,7 +162,7 @@ else {
         if (!!document.getElementById('xscript-stylesheet'))
             $(document.getElementById('xscript-stylesheet')).remove();
             
-        $(document.head).append($('<link id="xscript-stylesheet" rel="stylesheet" type="text/css"/>').attr('href', STYLESHEET_URL));
+        $(document.head).append($('<link id="xscript-stylesheet" rel="stylesheet" type="text/css"/>').attr('href', getUrl(UrlType.STYLESHEET)));
         
         // Smooth volume slider fading
         Plug.volSlider.css('opacity', 0);
@@ -244,7 +257,7 @@ else {
     var reloadScript = function() {
         initialized = false;
         destruct();
-        $.getScript(SCRIPT_URL);
+        $.getScript(getUrl(UrlType.SCRIPT));
     };
     
     /*
@@ -422,7 +435,7 @@ else {
     * Log a styled chat message.
     */
     var logMsg = function(msg) {
-        Plug.chatBox.append('<div class="cm message mention is-you"><div class="badge-box clickable"><i class="bdg s" style="background: url(' + BADGE_URL + '); background-size: contain;"></i></div><div class="msg"><div class="from"><span class="un clickable">xScript</span><span class="timestamp" style="display: inline;">' + getTimestamp() + '</span></div><div class="text" style="color: ' + MSG_COLOR + '">' + msg + '</div></div></div>');
+        Plug.chatBox.append('<div class="cm message mention is-you"><div class="badge-box clickable"><i class="bdg s" style="background: url(' + getUrl(UrlType.BADGE) + '); background-size: contain;"></i></div><div class="msg"><div class="from"><span class="un clickable">xScript</span><span class="timestamp" style="display: inline;">' + getTimestamp() + '</span></div><div class="text" style="color: ' + MSG_COLOR + '">' + msg + '</div></div></div>');
         Plug.chatBox.scrollTop(Plug.chatBox.prop('scrollHeight'));
     };
     
@@ -561,6 +574,29 @@ else {
         return ItemDisplay.FALSE;
     };
     
+    var getUrl = function(type) {
+        if (IS_BETA) {
+            switch (type) {
+                case UrlType.SCRIPT:
+                    return BetaUrls.SCRIPT_URL;
+                case UrlType.STYLESHEET:
+                    return BetaUrls.STYLESHEET_URL;
+                case UrlType.BADGE:
+                    return BetaUrls.BADGE_URL;
+            }
+        }
+        else {
+            switch (type) {
+                case UrlType.SCRIPT:
+                    return ScriptUrls.SCRIPT_URL;
+                case UrlType.STYLESHEET:
+                    return ScriptUrls.STYLESHEET_URL;
+                case UrlType.BADGE:
+                    return ScriptUrls.BADGE_URL;
+            }
+        }
+    };
+    
     /*
     * Build a user tag.
     */
@@ -628,6 +664,7 @@ else {
         autojoin: {func: function() {toggle(Mod.AUTOJOIN);}, help: '/autojoin - Toggle autojoin.'},
         autowoot: {func: function() {toggle(Mod.AUTOWOOT);}, help: '/autowoot - Toggle autowoot.'},
         automeh: {func: function() {toggle(Mod.AUTOMEH);}, help: '/automeh - Toggle automeh.'},
+        pm: {func: function() {logMsg('Ponymote Index: <a target="_blank" href="http://phantamanta44.github.io/ponymotes">http://phantamanta44.github.io/ponymotes</a>');}, help: '/pm - Display a link to an index of ponymotes.'},
         reload: {func: reloadScript, help: '/reload - Reload the script.'},
         disable: {func: function() {logMsg('Disabling xScript...'); initialized = false; destruct();}, help: '/disable - Unload the script.'},
         xshelp: {func: displayHelp, help: '/xshelp - Display commands.'}
