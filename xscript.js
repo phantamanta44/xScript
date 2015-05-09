@@ -83,7 +83,6 @@ else {
     // Dynamic vars
     var initialized = false;
     var pastName;
-    var chatSettingsExpanded = false;
     var theUser;
     var userTag;
     var initialBg;
@@ -99,7 +98,12 @@ else {
         wootAlertBtn: undefined,
         impendAlertBtn: undefined,
         durAlertBtn: undefined,
-        chatAlertBtn: undefined
+        chatAlertBtn: undefined,
+        settingsDiv: undefined,
+        settingsBtn: undefined,
+        autoJoinBtn: undefined,
+        autoWootBtn: undefined,
+        autoMehBtn: undefined
     };
     
     // Plug objects
@@ -111,7 +115,8 @@ else {
         volSlider: $(document.getElementById('volume').childNodes[4]),
         volBtn: $(document.getElementById('volume').childNodes[0]),
         chatDiv: $(document.getElementById('chat')),
-        chatHead: $(document.getElementById('chat-header'))
+        chatHead: $(document.getElementById('chat-header')),
+        appCont: $(document.getElementById('app'))
     };
     
     /*
@@ -179,31 +184,30 @@ else {
         XS.chatSettingsDiv = $(document.getElementById('xscript-chatSettingsDiv'));
         
         // Add items to chat settings menu
-        XS.chatSettingsDiv.append('<div class="item" id="xscript-trackSynBtn"><i class="icon icon-check-blue"></i><span style>Post-Track Synopsis</div>');
+        XS.chatSettingsDiv.append('<div class="item xscript-option" id="xscript-trackSynBtn"><i class="icon icon-check-blue"></i><span style>Post-Track Synopsis</div>');
         XS.trackSynBtn = $(document.getElementById('xscript-trackSynBtn'));
-        XS.chatSettingsDiv.append('<div class="item" id="xscript-twitchEmoteBtn"><i class="icon icon-check-blue"></i><span>Twitch Emotes</div>');
+        XS.chatSettingsDiv.append('<div class="item xscript-option" id="xscript-twitchEmoteBtn"><i class="icon icon-check-blue"></i><span>Twitch Emotes</div>');
         XS.twitchEmoteBtn = $(document.getElementById('xscript-twitchEmoteBtn'));
-        XS.chatSettingsDiv.append('<div class="item" id="xscript-joinAlertBtn"><i class="icon icon-check-blue"></i><span>Join/Leave Alerts</div>');
+        XS.chatSettingsDiv.append('<div class="item xscript-option" id="xscript-joinAlertBtn"><i class="icon icon-check-blue"></i><span>Join/Leave Alerts</div>');
         XS.joinAlertBtn = $(document.getElementById('xscript-joinAlertBtn'));
-        XS.chatSettingsDiv.append('<div class="item" id="xscript-wootAlertBtn"><i class="icon icon-check-blue"></i><span>Woot/Meh Alerts</div>');
+        XS.chatSettingsDiv.append('<div class="item xscript-option" id="xscript-wootAlertBtn"><i class="icon icon-check-blue"></i><span>Woot/Meh Alerts</div>');
         XS.wootAlertBtn = $(document.getElementById('xscript-wootAlertBtn'));
-        XS.chatSettingsDiv.append('<div class="item" id="xscript-impendAlertBtn"><i class="icon icon-check-blue"></i><span>Impending DJ Alert</div>');
+        XS.chatSettingsDiv.append('<div class="item xscript-option" id="xscript-impendAlertBtn"><i class="icon icon-check-blue"></i><span>Impending DJ Alert</div>');
         XS.impendAlertBtn = $(document.getElementById('xscript-impendAlertBtn'));
-        XS.chatSettingsDiv.append('<div class="item" id="xscript-durAlertBtn"><i class="icon icon-check-blue"></i><span>Duration Alert</div>');
+        XS.chatSettingsDiv.append('<div class="item xscript-option" id="xscript-durAlertBtn"><i class="icon icon-check-blue"></i><span>Duration Alert</div>');
         XS.durAlertBtn = $(document.getElementById('xscript-durAlertBtn'));
-        XS.chatSettingsDiv.append('<div class="item" id="xscript-chatAlertBtn"><i class="icon icon-check-blue"></i><span>Chat Triggers</span></div>');
+        XS.chatSettingsDiv.append('<div class="item xscript-option" id="xscript-chatAlertBtn"><i class="icon icon-check-blue"></i><span>Chat Triggers</span></div>');
         XS.chatAlertBtn = $(document.getElementById('xscript-chatAlertBtn'));
-        updateSettingsDivs();
         XS.chatSettingsDiv.height(0);
         
-        // Add functionality to chat settings menu button
+        // Add functionality to chat settings menu
         XS.chatSettingsBtn.click(function() {
-            if (chatSettingsExpanded) {
-                chatSettingsExpanded = false;
+            if (XS.chatSettingsDiv.hasClass('xscript-expanded')) {
+                XS.chatSettingsDiv.removeClass('xscript-expanded');
                 XS.chatSettingsDiv.animate({height: 0}, 1200);
             }
             else {
-                chatSettingsExpanded = true;
+                XS.chatSettingsDiv.addClass('xscript-expanded');
                 XS.chatSettingsDiv.animate({height: '100%'}, 1200);
             }
         });
@@ -220,6 +224,41 @@ else {
         XS.impendAlertBtn.click(function() {toggle(Mod.IMPENDALERT);});
         XS.durAlertBtn.click(function() {toggle(Mod.DURALERT);});
         XS.chatAlertBtn.click(function() {toggle(Mod.CHATALERT);});
+        
+        // Add settings div
+        Plug.appCont.append('<div id="xscript-settingsDiv"></div>');
+        XS.settingsDiv = $(document.getElementById('xscript-settingsDiv'));
+        XS.settingsDiv.append('<div id="xscript-settingsBtn"><span style="background-image: url(' + getUrl(UrlType.BADGE) + ');"/></div>');
+        XS.settingsBtn = $(document.getElementById('xscript-settingsBtn'));
+        
+        // Add items to settings div
+        XS.settingsDiv.append('<div id="xscript-settingsHeader"><img src="' + getUrl(UrlType.BADGE) + '"><h2>xScript Settings</h2></div>');
+        XS.settingsDiv.append('<div class="item xscript-option" id="xscript-autoJoinBtn"><i class="icon icon-check-blue"></i><span>AutoJoin</span></div>');
+        XS.autoJoinBtn = $(document.getElementById('xscript-autoJoinBtn'));
+        XS.settingsDiv.append('<div class="item xscript-option" id="xscript-autoWootBtn"><i class="icon icon-check-blue"></i><span>AutoWoot</span></div>');
+        XS.autoWootBtn = $(document.getElementById('xscript-autoWootBtn'));
+        XS.settingsDiv.append('<div class="item xscript-option" id="xscript-autoMehBtn"><i class="icon icon-check-blue"></i><span>AutoMeh</span></div>');
+        XS.autoMehBtn = $(document.getElementById('xscript-autoMehBtn'));
+        
+        // Add functionality to settings menu
+        XS.settingsBtn.click(function() {
+            if (XS.settingsDiv.hasClass('xscript-expanded')) {
+                XS.settingsDiv.removeClass('xscript-expanded');
+                XS.settingsDiv.css('left', '-300px');
+                XS.settingsBtn.css('left', '0');
+            }
+            else {
+                XS.settingsDiv.addClass('xscript-expanded');
+                XS.settingsDiv.css('left', 0);
+                XS.settingsBtn.css('left', '300px');
+            }
+        });
+        XS.autoJoinBtn.click(function() {toggle(Mod.AUTOJOIN);});
+        XS.autoWootBtn.click(function() {toggle(Mod.AUTOWOOT);});
+        XS.autoMehBtn.click(function() {toggle(Mod.AUTOMEH);});
+        
+        // Update setting buttons
+        updateSettingsDivs();
     };
     
     /*
@@ -468,19 +507,16 @@ else {
     var toggle = function(mod) {
         if (mod == Mod.AUTOJOIN) {
             settings.autoJoin.enabled = !settings.autoJoin.enabled;
-            logMsg('Toggled AutoJoin to ' + settings.autoJoin.enabled + '!');
             if (settings.autoJoin.enabled)
                 API.djJoin();
         }
         if (mod == Mod.AUTOWOOT) {
             settings.autoWoot.enabled = !settings.autoWoot.enabled;
-            logMsg('Toggled AutoWoot to ' + settings.autoWoot.enabled + '!');
             if (settings.autoWoot.enabled)
                 Plug.wootBtn.click();
         }
         if (mod == Mod.AUTOMEH) {
             settings.autoMeh.enabled = !settings.autoMeh.enabled;
-            logMsg('Toggled AutoMeh to ' + settings.autoMeh.enabled + '!');
             if (settings.autoMeh.enabled)
                 Plug.mehBtn.click();
         }
@@ -568,6 +604,9 @@ else {
         XS.trackSynBtn.find('i').css('display', getSettingDisplayMode(settings.trackSynopsis));
         XS.twitchEmoteBtn.find('i').css('display', getSettingDisplayMode(settings.twitchEmotes));
         XS.wootAlertBtn.find('i').css('display', getSettingDisplayMode(settings.wootAlert));
+        XS.autoJoinBtn.find('i').css('display', getSettingDisplayMode(settings.autoJoin));
+        XS.autoWootBtn.find('i').css('display', getSettingDisplayMode(settings.autoWoot));
+        XS.autoMehBtn.find('i').css('display', getSettingDisplayMode(settings.autoMeh));
     };
     
     /*
@@ -673,8 +712,8 @@ else {
         autoJoin: {enabled: true},
         autoWoot: {enabled: false}, //TODO toggle buttons in some GUI
         autoMeh: {enabled: false},
-        chatImg: {enabled: true, nsfw: false}, //TODO 
-        twitchEmotes: {enabled: true}, //TODO implement
+        chatImg: {enabled: true, nsfw: false}, //TODO configurable
+        twitchEmotes: {enabled: true},
         trackSynopsis: {enabled: true},
         joinAlert: {enabled: true},
         wootAlert: {enabled: true},
@@ -690,9 +729,9 @@ else {
         kick: {func: unimplAlert, help: '/kick [user] - Kick the user from the community.'}, //TODO implement
         bg: {func: bgCommand, help: '/bg [url|reset|default] - Change the custom background.'},
         skip: {func: unimplAlert, help: '/skip - Attempt to skip the current DJ.'}, //TODO implement
-        autojoin: {func: function() {toggle(Mod.AUTOJOIN);}, help: '/autojoin - Toggle autojoin.'},
-        autowoot: {func: function() {toggle(Mod.AUTOWOOT);}, help: '/autowoot - Toggle autowoot.'},
-        automeh: {func: function() {toggle(Mod.AUTOMEH);}, help: '/automeh - Toggle automeh.'},
+        autojoin: {func: function() {toggle(Mod.AUTOJOIN); logMsg('Toggled AutoJoin to ' + settings.autoJoin.enabled + '!');}, help: '/autojoin - Toggle autojoin.'},
+        autowoot: {func: function() {toggle(Mod.AUTOWOOT); logMsg('Toggled AutoWoot to ' + settings.autoWoot.enabled + '!');}, help: '/autowoot - Toggle autowoot.'},
+        automeh: {func: function() {toggle(Mod.AUTOMEH); logMsg('Toggled AutoMeh to ' + settings.autoMeh.enabled + '!');}, help: '/automeh - Toggle automeh.'},
         pm: {func: function() {logMsg('Ponymote Index: <a target="_blank" href="http://phantamanta44.github.io/ponymotes">http://phantamanta44.github.io/ponymotes</a>');}, help: '/pm - Display a link to an index of ponymotes.'},
         reload: {func: reloadScript, help: '/reload - Reload the script.'},
         disable: {func: function() {logMsg('Disabling xScript...'); initialized = false; destruct();}, help: '/disable - Unload the script.'},

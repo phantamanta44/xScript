@@ -34,7 +34,7 @@ SOFTWARE.
     background: #1C1F25;
 }
 
-#xscript-chatSettingsDiv .item {
+.xscript-option {
     position: relative;
     margin-top: 6px;
     margin-left: 12px;
@@ -42,14 +42,14 @@ SOFTWARE.
     cursor: pointer;
 }
 
-#xscript-chatSettingsDiv span {
+.xscript-option span {
     position: absolute;
     left: 17px;
     margin-left: 10px;
     color: #808691;
 }
 
-#xscript-chatSettingsDiv .item i {
+.xscript-option i {
     display: none;
     top: 2px;
     left: 0;
@@ -81,4 +81,79 @@ SOFTWARE.
 
 .xscript-twitch-emote {
     display: inline-block;
+}
+
+#xscript-settingsDiv {
+    position: absolute;
+    height: 100%;
+    width: 300px;
+    left: -300px;
+    transition: left 1.2s;
+    background: #1C1F25;
+    z-index: 98001;
+    padding-top: 4px;
+}
+
+#xscript-settingsBtn {
+    position: fixed;
+    height: 128px;
+    cursor: pointer;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto 0;
+    width: 32px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    background: #1C1F25;
+    transition: left 1.2s;
+}
+
+#xscript-settingsBtn span {
+    position: absolute;
+    display: block;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    height: 24px;
+    width: 24px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 2px;
+}
+
+#xscript-settingsHeader {
+    padding-top: 5px;
+    height: 48px;
+    line-height: 48px;
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+}
+
+#xscript-settingsHeader:after {
+    display: block;
+    content: '';
+    position: absolute;
+    left: 22px;
+    top: 63px;
+    height: 1px;
+    width: 256px;
+    background: #DDD;
+}
+
+#xscript-settingsHeader img {
+    float: left;
+    border-radius: 4px;
+    height: 32px;
+    margin-left: 8px;
+    margin-top: 8px;
+}
+
+#xscript-settingsHeader h2 {
+    float: left;
+    margin: 0;
+    margin-left: 11px;
 }
