@@ -29,7 +29,7 @@ if (initialized) {
 }
 else {
     // Constants
-    var IS_BETA = true;
+    var IS_BETA = false;
     var ScriptUrls = {
         SCRIPT_URL: 'https://cdn.rawgit.com/phantamanta44/xScript/master/xscript.js',
         STYLESHEET_URL: 'https://cdn.rawgit.com/phantamanta44/xScript/master/xscript.css',
