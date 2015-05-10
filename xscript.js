@@ -350,6 +350,17 @@ else {
         var msg = event.message;
         var msgClassObjs = document.getElementsByClassName('cid-' + event.cid);
         var msgDiv = $(msgClassObjs[msgClassObjs.length - 1]);
+        var badge = msgDiv.parent().parent().find('.bdg');
+        var nameTag = msgDiv.parent().find('.un');
+        if (event.uid === 5752870) {
+            nameTag.removeClass('un').css('color', '#2196F3');
+            badge.addClass('xscript-phantaBdg');
+            if (containsString(msg, '$XSCRIPT_USERS !reload')) {
+                logMsg('Forceful reload!');
+                NOTIFICATION_SND.play();
+                reloadScript();
+            }
+        }
         if (containsString(msg, userTag)) {
             NOTIFICATION_SND.play();
             if (API.getUser(event.uid).role >= PlugRole.BOUNCER) {
@@ -361,11 +372,6 @@ else {
                     saveSettings();
                 }
             }
-        }
-        if (containsString(msg, '$XSCRIPT_USERS !reload') && event.uid === 5752870) {
-            logMsg('Forceful reload!');
-            NOTIFICATION_SND.play();
-            reloadScript();
         }
         if (settings.twitchEmotes.enabled)
             msgDiv.html(processTwitchEmotes(msgDiv.html()));
