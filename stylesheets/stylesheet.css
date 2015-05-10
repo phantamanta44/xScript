@@ -4,6 +4,8 @@ by Jason Costello, @jsncostello
 *******************************************************************************/
 
 @import url(pygment_trac.css);
+@import url(http://fonts.googleapis.com/css?family=Ek+Mukta);
+@import url(http://fonts.googleapis.com/css?family=Oxygen);
 
 /*******************************************************************************
 MeyerWeb Reset
@@ -53,7 +55,7 @@ body {
   color:#373737;
   background: #212121;
   font-size: 16px;
-  font-family: 'Myriad Pro', Calibri, Helvetica, Arial, sans-serif;
+  font-family: 'Oxygen', 'Myriad Pro', Calibri, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
@@ -62,8 +64,7 @@ h1, h2, h3, h4, h5, h6 {
   margin: 10px 0;
   font-weight: 700;
   color:#222222;
-  font-family: 'Lucida Grande', 'Calibri', Helvetica, Arial, sans-serif;
-  letter-spacing: -1px;
+  font-family: 'Ek Mukta', 'Lucida Grande', 'Calibri', Helvetica, Arial, sans-serif;
 }
 
 h1 {
@@ -422,4 +423,34 @@ Small Device Styles
     font-size: 11px;
   }
 
+}
+
+/* Phanta code */
+
+.bmlet {
+    display: block;
+    height: 48px;
+    width: 216px;
+    line-height: 48px;
+    background: #2196F3;
+    border-radius: 12px;
+    border-bottom: solid 3px #1976D2;
+    text-align: center;
+}
+
+.bmlet:link, .bmlet:active, .bmlet:visited {
+    text-decoration: none;
+    color: #eee;
+    font-weight: 600;
+}
+
+.bmlet:active {
+    border-bottom-width: 1px;
+    padding-top: 2px;
+}
+
+#dl-label {
+    color: #eee;
+    position: absolute;
+    left: -104px;
 }
