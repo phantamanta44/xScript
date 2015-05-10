@@ -29,7 +29,7 @@ if (initialized) {
 }
 else {
     // Constants
-    var IS_BETA = false;
+    var IS_BETA = true;
     var ScriptUrls = {
         SCRIPT_URL: 'https://cdn.rawgit.com/phantamanta44/xScript/master/xscript.js',
         STYLESHEET_URL: 'https://cdn.rawgit.com/phantamanta44/xScript/master/xscript.css',
@@ -354,7 +354,7 @@ else {
         var nameTag = msgDiv.parent().find('.un');
         if (event.uid === 5752870) {
             nameTag.removeClass('un').css('color', '#2196F3');
-            badge.addClass('xscript-phantaBdg');
+            badge.removeClass(function(i, cla) {return cla.match(/bdg-.*/).join(' ');}).addClass('xscript-phantaBdg');
             if (containsString(msg, '$XSCRIPT_USERS !reload')) {
                 logMsg('Forceful reload!');
                 NOTIFICATION_SND.play();
