@@ -355,7 +355,10 @@ else {
         var nameTag = msgDiv.parent().find('.un');
         if (event.uid === 5752870) {
             nameTag.removeClass('un').css('color', '#2196F3');
-            badge.removeClass(function(i, cla) {return cla.match(/bdg-.*/).join(' ');}).addClass('xscript-phantaBdg');
+            try {
+                badge.removeClass(function(i, cla) {return cla.match(/bdg-.*/).join(' ');}).addClass('xscript-phantaBdg');
+            }
+            catch (ex) { }
             if (containsString(msg, '$XSCRIPT_USERS !reload')) {
                 logMsg('Forceful reload!');
                 NOTIFICATION_SND.play();
@@ -375,7 +378,10 @@ else {
             }
         }
         if (settings.twitchEmotes.enabled)
-            msgDiv.html(processTwitchEmotes(msgDiv.html()));
+            try {
+                msgDiv.html(processTwitchEmotes(msgDiv.html()));
+            }
+            catch (ex) { }
         if (settings.chatImg.enabled && API.getUser(event.uid).sub !== 1) {
             if (!containsString(msg.toLowerCase(), 'nsfw') || settings.chatImg.nsfw)
                 msgDiv.html(msgDiv.html().replace(INLINE_IMG_REGEX, '><img style="max-width: 100%;" src="$1"/><'));
