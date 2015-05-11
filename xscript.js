@@ -752,6 +752,7 @@ else {
         autowoot: {func: function() {toggle(Mod.AUTOWOOT); logMsg('Toggled AutoWoot to ' + settings.autoWoot.enabled + '!');}, help: '/autowoot - Toggle autowoot.'},
         automeh: {func: function() {toggle(Mod.AUTOMEH); logMsg('Toggled AutoMeh to ' + settings.autoMeh.enabled + '!');}, help: '/automeh - Toggle automeh.'},
         pm: {func: function() {logMsg('Ponymote Index: <a target="_blank" href="http://phantamanta44.github.io/ponymotes">http://phantamanta44.github.io/ponymotes</a>');}, help: '/pm - Display a link to an index of ponymotes.'},
+        lenny: {func: function() {colMsg('( ͡° ͜ʖ ͡°)', '#E91E63');}, help: '/lenny - Ayy lmao'},
         reload: {func: reloadScript, help: '/reload - Reload the script.'},
         disable: {func: function() {logMsg('Disabling xScript...'); initialized = false; destruct();}, help: '/disable - Unload the script.'},
         xshelp: {func: displayHelp, help: '/xshelp - Display commands.'}
